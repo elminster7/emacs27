@@ -1,0 +1,16 @@
+;; packages.el --- editors configuration by elminster.
+
+;; ripgrep search
+(defun editor/ripgrep ()
+  "ripgrep init"
+  (use-package ripgrep
+    :ensure t
+    :bind (("C-p" . ripgrep-regexp))))
+
+;; editor init
+(defun editor/function_init ()
+  "editor preference settings init"
+  (editor/ripgrep))
+
+(defun editor/init ()
+  (editor/function_init))

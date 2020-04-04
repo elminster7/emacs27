@@ -14,18 +14,23 @@
 (defvar emacs-layers-dir (expand-file-name "layers" emacs-dir)
   " This directory is divide to package.")
 
-;; ▶ appearance directory.
-(defvar layer-appearance-dir (expand-file-name "+appearance/packages.el" emacs-layers-dir)
-  "This directory Appearance directory.")
-
-;; ▶ Editor Directory.
+;; ▶ Editor directory.
 (defvar layer-editor-dir (expand-file-name "+editor/packages.el" emacs-layers-dir)
   "This Directory Editor.")
 
-;; ▶ Performance tunning  Directory.
+;; ▶ Performance tunning  directory.
 (defvar layer-performance-dir (expand-file-name "+performance/packages.el" emacs-layers-dir)
   "This Directory performance tunning.")
 
+;; ▶ completion  directory.
+(defvar layer-completion-dir (expand-file-name "+completion/packages.el" emacs-layers-dir)
+  "This Directory performance tunning.")
+
+;; ▶ completion  directory.
+(defvar layer-tools-dir (expand-file-name "+tools/packages.el" emacs-layers-dir)
+  "This Directory performance tunning.")
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; ▶ add appearance path init.
 (defun emacs/load-appearance-path ()
   "emacs theme layer directory load path."
@@ -36,29 +41,32 @@
 (defun emacs/load-editor-dir ()
   "emacs editor directory load path."
   (load-file layer-editor-dir)
-;;  (load-file layer-editor-nlinum-dir)
   (editor/init))
 
 ;; add performance path init
-(defun emacs/performance-dir ()
+(defun emacs/load-performance-dir ()
   "emacs performance directory load path."
-  (load-file layer-performance-dir))
+  (load-file layer-performance-dir)
+  (performance/init))
 
+;; add completion dir.
+(defun emacs/load-completion-dir ()
+  "emacs performance directory load path."
+  (load-file layer-completion-dir)
+  (completion/init))
+
+;; add completion dir.
+(defun emacs/load-tools-dir ()
+  "emacs performance directory load path."
+  (load-file layer-tools-dir)
+  (tools/init))
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 (defun emacs/load-path-init ()
   " Defined Directory default init."
-  ;; VersionControl init
-  ;;(emacs/layer-version-control-path)
-  ;; Appearance init
-  ;;(emacs/load-appearance-path)
-  ;; Editor init
   (emacs/load-editor-dir)
-  (emacs/performance-dir)
-  ;; emacs tags init
-  ;;(emacs/load-tags-dir)
-  ;; Build/debugger init
-  ;;(emacs/load-debug-dir)
-  ;; helm-imenu
-  ;;(emacs/load-tools-dir)
-  )
+  (emacs/load-completion-dir)
+  (emacs/load-tools-dir)
+  (emacs/load-performance-dir))
 
 (provide 'core-load-path)
