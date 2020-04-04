@@ -50,7 +50,7 @@
 ;; editor init
 (defun editor/function_init ()
   "editor preference settings init"
-  (editor/auto-highlight-symbol)
+  (editor/winmove-init)
   (editor/dired-settings)
   (editor/popup-imenu)
   (editor/ripgrep))

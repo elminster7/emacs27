@@ -1,7 +1,37 @@
 ;; packages.el --- tools packages for elminster.
 
+;; ivy is an interactive interface for completion.
+;; counsel package include ivy, bind-key, swiper.
+(defun tools/ivy ()
+    "interactive interface for completion."
+  (use-package ivy 
+    :ensure t
+    :init
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    :bind (("C-s" . swiper-all)
+	   ("C-c s" . swiper-all-thing-at-point)
+	   ("C-c C-r" . ivy-resume)
+	   )))
+
+;; counsel
+(defun tools/counsel ()
+  "interface counsel package"
+  (use-package counsel
+	       :ensure t
+	       :init
+	       :bind (("M-x" . counsel-M-x)
+	   ("C-x C-f" . counsel-find-file)
+	   ("C-c c" . counsel-compile)
+	   ("C-c g" . counsel-git)
+	   ("C-c j" . counsel-git-grep)
+	   ("C-c k" . counsel-ag)
+	   ("C-x l" . counsel-locate)
+	   ("≈" . counsel-M-x))))
+
 ;; lsp mode
-(defun editor/lsp-mode ()
+(defun tools/lsp-mode ()
   "lsp packages"
   (use-package lsp-mode
     :defer t
@@ -17,7 +47,7 @@
     ))
   ;; :config (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
 
-(defun editor/lsp-ui ()
+(defun tools/lsp-ui ()
   "lsp mode"
   (use-package lsp-ui
     :requires lsp-mode flycheck
@@ -56,5 +86,7 @@
   )
 
 (defun tools/init ()
-  (editor/lsp-mode)
-  (editor/lsp-ui))
+  (tools/counsel)
+  (tools/ivy)
+  (tools/lsp-mode)
+  (tools/lsp-ui))
