@@ -11,8 +11,15 @@
     (setq ivy-use-virtual-buffers t)
     (setq ivy-count-format "(%d/%d) ")
     :bind (("C-s" . swiper-all-thing-at-point)
-	   ("C-c C-r" . ivy-resume)
-	   )))
+	   ("C-c C-r" . ivy-resume))))
+
+(defun tools/multiplecursor ()
+  "Multiple Cursor Init"
+  (use-package multiple-cursors
+    :ensure t
+    :bind (("C-l" . mc/edit-lines)
+           ("C-;" . mc/mark-all-like-this)
+           ("C-'" . mc/mark-all-words-like-this))))
 
 ;; counsel
 (defun tools/counsel ()
@@ -155,4 +162,5 @@
   (tools/lsp-ui)
   (tools/company-lsp)
   (tools/init-xcscope)
+  (tools/multiplecursor)
   (tools/ccls))
