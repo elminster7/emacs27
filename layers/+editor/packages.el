@@ -96,6 +96,24 @@
                 ("M-p" . ahs-backward)
                 ("M-n" . ahs-forward))))
 
+(defun editor/default-env ()
+  "default env"
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq coding-system-for-read 'utf-8)
+  (setq coding-system-for-write 'utf-8)
+  (set-language-environment "UTF-8")
+  
+  (setq auto-mode-alist
+	  (cons '("\\.mak\\'" . makefile-mode) auto-mode-alist))
+  (setq auto-mode-alist
+	(cons '("\\.bb\\'" . makefile-mode) auto-mode-alist))
+  (setq auto-mode-alist
+	(cons '("\\.inc\\'" . makefile-mode) auto-mode-alist))
+  (setq auto-mode-alist
+	(cons '("Makefile" . makefile-mode) auto-mode-alist))
+  (setq auto-mode-alist
+	(cons '("\\.conf\\'" . makefile-mode) auto-mode-alist)))
+
 ;; ripgrep search
 (defun editor/ripgrep ()
   "ripgrep init"
@@ -112,6 +130,7 @@
   (editor/dired-settings)
   (editor/popup-imenu)
   (editor/ecb)
+  (editor/default-env)
   (editor/ripgrep))
 
 (defun editor/init ()
