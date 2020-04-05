@@ -13,6 +13,32 @@
 	   ("C-c <up>" . windmove-up)
 	   ("C-c <down>" . windmove-down))))
 
+;; nlinum function setting.
+(defun editor/nlinum ()
+  "nlinum install"
+  (use-package nlinum
+    :ensure t
+    :init
+    (require 'nlinum)
+    (nlinum-mode 1)
+    (set-face-foreground 'linum "#af8700")
+    (setq nlinum-format "%4d\u2502")
+    (global-hl-line-mode +1)
+    (global-nlinum-mode t)
+    (setq auto-window-vscroll nil)))
+
+(defun editor/highlight-indent ()
+  "highlight indent guides"
+  (add-to-list 'load-path "~/.emacs.d/elpa/highlight-indent-guides/")
+  (require 'highlight-indent-guides)
+  (setq highlight-indent-guides-method 'character)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  (setq highlight-indent-guides-delay 10)
+  (setq highlight-indent-guides-auto-odd-face-perc 15)
+  (setq highlight-indent-guides-auto-even-face-perc 15)
+  (setq highlight-indent-guides-auto-character-face-perc 20)
+  (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; edit
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,7 +76,9 @@
 ;; editor init
 (defun editor/function_init ()
   "editor preference settings init"
+  (editor/highlight-indent)
   (editor/winmove-init)
+  (editor/nlinum)
   (editor/dired-settings)
   (editor/popup-imenu)
   (editor/ripgrep))
