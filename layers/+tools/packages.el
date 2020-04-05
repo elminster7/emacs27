@@ -3,15 +3,14 @@
 ;; ivy is an interactive interface for completion.
 ;; counsel package include ivy, bind-key, swiper.
 (defun tools/ivy ()
-    "interactive interface for completion."
+  "interactive interface for completion."
   (use-package ivy 
     :ensure t
     :init
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
     (setq ivy-count-format "(%d/%d) ")
-    :bind (("C-s" . swiper-all)
-	   ("C-c s" . swiper-all-thing-at-point)
+    :bind (("C-s" . swiper-all-thing-at-point)
 	   ("C-c C-r" . ivy-resume)
 	   )))
 
@@ -19,9 +18,9 @@
 (defun tools/counsel ()
   "interface counsel package"
   (use-package counsel
-	       :ensure t
-	       :init
-	       :bind (("M-x" . counsel-M-x)
+    :ensure t
+    :init
+    :bind (("M-x" . counsel-M-x)
 	   ("C-x C-f" . counsel-find-file)
 	   ("C-c c" . counsel-compile)
 	   ("C-c g" . counsel-git)
@@ -46,7 +45,7 @@
     :config
     (setq lsp-prefer-flymake nil) ;; Prefer using lsp-ui (flycheck) over flymake.
     ))
-  ;; :config (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+;; :config (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
 
 (defun tools/lsp-ui ()
   "lsp mode"
