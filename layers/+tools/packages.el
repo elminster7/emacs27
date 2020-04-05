@@ -154,6 +154,11 @@
   :hook ((c-mode c++-mode) .
 	 (lambda () (require 'ccls)(lsp)))))
 
+;; ▼ bind keymapping for tool.
+(defun tool/manual-to-man ()
+  "shortcut manual key for man"
+  (bind-key "C-c /" 'man-follow))
+
 (defun tools/init ()
   (tools/counsel)
   (tools/ivy-rtags)
@@ -163,4 +168,5 @@
   (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
+  (tools/manual-to-man)
   (tools/ccls))

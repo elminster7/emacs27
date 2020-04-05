@@ -96,12 +96,20 @@
                 ("M-p" . ahs-backward)
                 ("M-n" . ahs-forward))))
 
+(defun editor/white-space ()
+  "white space column"
+  (setq-default
+   whitespace-line-column 80
+   whitespace-style       '(face lines-tail)))
+
 (defun editor/default-env ()
   "default env"
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq coding-system-for-read 'utf-8)
   (setq coding-system-for-write 'utf-8)
   (set-language-environment "UTF-8")
+
+  (editor/white-space)
   
   (setq auto-mode-alist
 	  (cons '("\\.mak\\'" . makefile-mode) auto-mode-alist))
