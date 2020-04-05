@@ -30,6 +30,21 @@
 	   ("C-x l" . counsel-locate)
 	   ("≈" . counsel-M-x))))
 
+(defun tools/init-xcscope ()
+  "cscope package install"
+  (use-package xcscope
+    :ensure t
+    :init
+    (add-hook 'c-mode-hook 'xcscope-mode)
+    (add-hook 'c++-mode-hook 'xcscope-mode)
+    (add-hook 'asm-mode-hook 'xcscope-mode)
+    :bind
+    (("C-c c" . cscope-find-functions-calling-this-function)
+     ("C-c ]" . cscope-find-global-definition)
+     ("C-c [" . cscope-pop-mark)
+     ("C-c t" . cscope-find-this-text-string)
+     ("C-c n" . cscope-find-egrep-pattern))))
+
 ;; tools ivy-rtags
 (defun tools/ivy-rtags ()
   "company rtags"
@@ -60,10 +75,7 @@
 ;	   ("C-t" . rtags-symbol-type)
 ;	   ("C-I" . rtags-include-file)
 ;	   ("C-i" . rtags-get-include-file-for-symbol))
-    :init (setq rtags-display-result-backend 'ivy)
-    (add-hook 'c-mode-hook 'xcscope-mode)
-    (add-hook 'c++-mode-hook 'xcscope-mode)
-    (add-hook 'asm-mode-hook 'xcscope-mode)))
+    :init (setq rtags-display-result-backend 'ivy)))
 
 ;; lsp mode
 (defun tools/lsp-mode ()
@@ -114,7 +126,9 @@
     ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
     ;; emacs-lsp/lsp-ui#243
     (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-      (setq mode-line-format nil))))
+      (setq mode-line-format nil))
+    :init (setq lsp-ui-sideline-toggle-symbol-info t)))
+
 
 (defun tools/company-lsp ()
   "company lsp"
@@ -140,4 +154,5 @@
   (tools/lsp-mode)
   (tools/lsp-ui)
   (tools/company-lsp)
+  (tools/init-xcscope)
   (tools/ccls))
