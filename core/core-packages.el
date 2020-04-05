@@ -12,7 +12,7 @@ There are two things you can do about this warning:
 2. Remove this warning from your init file so you won't see it again."))
   ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
   ;; and `package-pinned-packages`. Most users will not need or want to do this.
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://mulpa.milkbox.net/packages/")) t))
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.milkbox.net/packages/")) t))
 
 (package-initialize)
 
