@@ -30,63 +30,76 @@
 	   ("C-x l" . counsel-locate)
 	   ("≈" . counsel-M-x))))
 
+;; tools ivy-rtags
+(defun tools/ivy-rtags ()
+  "company rtags"
+  (use-package ivy-rtags
+    :ensure t
+    :hook ((c++-mode . rtags-start-process-unless-running)
+    (c-mode . rtags-start-process-unless-running))
+    :config (setq rtags-completions-enabled t
+		  rtags-path "/home/elminster/.emacs.d/elpa/rtags-20200221.36/rtags.el"
+		  rtags-rc-binary-name "/usr/local/bin/rc"
+		  rtags-use-ivy t
+		  rtags-rdm-binary-name "/usr/local/bin/rdm")
+    :bind (("M-." . rtags-find-symbol-at-point)
+	   ("M-," . rtags-find-symbol)
+	   ("M-r" . rtags-find-references-at-point)
+;	   ("C-o" . rtags-find-references-at-point)
+;	   ("M-s" . rtags-find-file)
+;	   ("C-v" . rtags-find-virtuals-at-point)
+;	   ("C-F" . rtags-fixit)
+	   ("M-]" . rtags-location-stack-forward)
+	   ("M-[" . rtags-location-stack-back)
+;	   ("C-n" . rtags-next-match)
+;	   ("C-p" . rtags-previous-match)
+;	   ("C-P" . rtags-preprocess-file)
+;	   ("C-R" . rtags-rename-symbol)
+	   ("M-s" . rtags-show-rtags-buffer)
+	   ("M-t" . rtags-print-symbol-info))
+;	   ("C-t" . rtags-symbol-type)
+;	   ("C-I" . rtags-include-file)
+;	   ("C-i" . rtags-get-include-file-for-symbol))
+    :init (setq rtags-display-result-backend 'ivy)
+    (add-hook 'c-mode-hook 'xcscope-mode)
+    (add-hook 'c++-mode-hook 'xcscope-mode)
+    (add-hook 'asm-mode-hook 'xcscope-mode)))
+
 ;; lsp mode
 (defun tools/lsp-mode ()
-  "lsp packages"
+  "lsp mode"
   (use-package lsp-mode
-    :defer t
-    :commands lsp
-    :custom
-    (lsp-auto-guess-root t)
-    (lsp-enable-snippet nil)
-    (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-    :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
-    :hook ((python-mode c-mode c++-mode) . lsp)
-    :config
-    (setq lsp-prefer-flymake nil) ;; Prefer using lsp-ui (flycheck) over flymake.
-    ))
-;; :config (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+  :commands lsp
+  :ensure t))
 
 (defun tools/lsp-ui ()
   "lsp mode"
   (use-package lsp-ui
-    :requires lsp-mode flycheck
     :commands lsp-ui-mode
-    :custom-face
-    (lsp-ui-doc-background ((t (:background nil))))
-    (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
-    :bind (:map lsp-ui-mode-map
-		([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-		([remap xref-find-references] . lsp-ui-peek-find-references)
-		("C-c u" . lsp-ui-imenu))
-    :hook (lsp-mode-hook . lsp-ui-mode)
-    :custom
-    (lsp-ui-doc-enable t)
-    (lsp-ui-doc-use-childframe t)
-    (lsp-ui-flycheck-enable t)
-    (lsp-ui-flycheck-list-position 'right)
-    (lsp-ui-flycheck-live-reporting t)
-    (lsp-ui-peek-enable t)
-    (lsp-ui-peek-list-width 60)
-    (lsp-ui-peek-peek-height 25)
-    (lsp-ui-doc-header t)
-    (lsp-ui-doc-include-signature t)
-    (lsp-ui-doc-position 'top)
-    (lsp-ui-doc-border (face-foreground 'default))
-    (lsp-ui-sideline-enable t)
-    (lsp-ui-sideline-ignore-duplicate t)
-    (lsp-ui-sideline-show-code-actions t)
-    :config
-    ;; Use lsp-ui-doc-webkit only in GUI
-    (setq lsp-ui-doc-use-webkit nil)
-    ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-    ;; emacs-lsp/lsp-ui#243
-    (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-      (setq mode-line-format nil)))
-  )
+    :ensure t))
+
+(defun tools/company-lsp ()
+  "company lsp"
+  (use-package company-lsp
+  :ensure t
+  :commands company-lsp
+  :config (push 'company-lsp company-backends)))
+
+(defun tools/ccls ()
+  (use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "ccls")
+  (setq lsp-prefer-flymake nil)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  :hook ((c-mode c++-mode) .
+	 (lambda () (require 'ccls)(lsp)))))
 
 (defun tools/init ()
   (tools/counsel)
+  (tools/ivy-rtags)
   (tools/ivy)
   (tools/lsp-mode)
-  (tools/lsp-ui))
+  (tools/lsp-ui)
+  (tools/company-lsp)
+  (tools/ccls))
