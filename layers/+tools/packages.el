@@ -168,5 +168,4 @@
   (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
-  (tools/manual-to-man)
   (tools/ccls))
