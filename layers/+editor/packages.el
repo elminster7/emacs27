@@ -79,6 +79,13 @@
     :ensure t
     :bind (("C-f" . popup-imenu))))
 
+(defun editor/linux-c-indent ()
+  "adjusted defaults for C/C++ mode use with the Linux kernel."
+  (interactive)
+  (setq indent-tabs-mode nil) 
+  (add-hook 'c-mode-hook (lambda() (c-set-style "K&R")))
+  (setq c-basic-offset 8))
+
 ;; dired settings
 (defun editor/dired-settings ()
   "dired copy setting."
@@ -137,6 +144,7 @@
   (editor/winmove-init)
   (editor/nlinum)
   (editor/dired-settings)
+  (editor/linux-c-indent)
   (editor/popup-imenu)
   (editor/ecb)
   (editor/default-env)
