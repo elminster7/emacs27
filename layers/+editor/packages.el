@@ -132,6 +132,7 @@
 ;; editor init
 (defun editor/function_init ()
   "editor preference settings init"
+  (editor/auto-highlight-symbol)
   (editor/highlight-indent)
   (editor/winmove-init)
   (editor/nlinum)
