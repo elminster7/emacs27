@@ -154,11 +154,18 @@
   :hook ((c-mode c++-mode) .
 	 (lambda () (require 'ccls)(lsp)))))
 
+(defun tools/lsp-clangd ()
+;;  (add-to-list 'load-path "~/.emacs.d/elpa/lsp-clangd")
+;;  (require 'lsp-clangd)
+  (add-hook 'c-mode-hook #'lsp-clangd-c-enable)
+  (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
+
 ;; ▼ bind keymapping for tool.
 (defun tool/manual-to-man ()
   "shortcut manual key for man"
   (bind-key "C-c /" 'man-follow))
 
+;; helm-lsp flycheck
 (defun tools/init ()
   (tools/counsel)
   (tools/ivy-rtags)
@@ -168,4 +175,5 @@
   (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
-  (tools/ccls))
+  (tools/lsp-clangd))
+;  (tools/ccls))
