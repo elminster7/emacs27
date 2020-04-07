@@ -87,7 +87,7 @@
 ;; lsp mode
 (defun tools/lsp-mode ()
   "lsp mode"
-  (use-package lsp-mode
+  (use-package lsp-ivy
   :commands lsp
   :ensure t
   :custom ((lsp-auto-guess-root t)
@@ -175,5 +175,5 @@
   (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
-  (tools/lsp-clangd))
-;  (tools/ccls))
+;;  (tools/lsp-clangd))
+  (tools/ccls))
