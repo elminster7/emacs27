@@ -122,7 +122,7 @@
 	    (lsp-ui-peek-peek-height 25)
 	    (lsp-ui-doc-header t)
 	    (lsp-ui-doc-include-signature t)
-	    (lsp-ui-doc-position 'top)
+	    (lsp-ui-doc-position 'at-point)
 	    (lsp-ui-doc-border (face-foreground 'default))
 	    (lsp-ui-sideline-enable t)
 	    (lsp-ui-sideline-ignore-duplicate t)
