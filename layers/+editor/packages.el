@@ -25,6 +25,7 @@
     (setq nlinum-format "%4d\u2502")
     (global-hl-line-mode +1)
     (global-nlinum-mode t)
+    (set-face-background 'hl-line "color-238")
     (setq auto-window-vscroll nil)))
 
 (defun editor/highlight-indent ()
