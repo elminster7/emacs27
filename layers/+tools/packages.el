@@ -52,6 +52,20 @@
      ("C-c t" . cscope-find-this-text-string)
      ("C-c n" . cscope-find-egrep-pattern))))
 
+(defun tools/counsel-gtags ()
+  "counsel gtags"
+  (use-package counsel-gtags
+    :ensure t
+    :init
+    (add-hook 'c++-mode-hook 'counsel-gtags-mode)
+    (add-hook 'php-mode-hook 'counsel-gtags-mode)
+    :bind (("M-g ." . counsel-gtags-dwim)
+	   ("M-g t" . counsel-gtags-pop-stack)
+	   ("M-g r" . counsel-gtags-find-tags)
+	   ("M-g s" . counsel-gtags-find-symbol)
+	   ("M-g [" . counsel-gtags-previous-history)
+	   ("M-g ]" . counsel-gtags-next-history))))
+
 ;; tools ivy-rtags
 (defun tools/ivy-rtags ()
   "company rtags"
@@ -197,5 +211,6 @@
   (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
+  (tools/counsel-gtags)
 ;;  (tools/lsp-clangd))
   (tools/ccls))
