@@ -197,9 +197,15 @@
   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
 
 ;; ▼ bind keymapping for tool.
-(defun tool/manual-to-man ()
+(defun tools/manual-to-man ()
   "shortcut manual key for man"
   (bind-key "C-c /" 'man-follow))
+
+(defun tools/bind-key ()
+  "expanded bind key settings."
+  (bind-key "C-c s" 'lsp)
+  (bind-key "C-c u" 'lsp-ui-sideline-toggle-symbols-info)
+  (bind-key "C-c r" 'lsp-ui-peek-find-references))
 
 ;; helm-lsp flycheck
 (defun tools/init ()
@@ -212,5 +218,6 @@
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
+  (tools/bind-key)
 ;;  (tools/lsp-clangd))
   (tools/ccls))
