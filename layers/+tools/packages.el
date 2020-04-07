@@ -95,6 +95,7 @@
 	   (lsp-prefer-flymake nil))
   :hook ((python-mode c-mode c++-mode) . lsp)
   :config
+  (require 'lsp-clients)
   ;; Prefer using lsp-ui (flycheck) over flymake.
   (setq lsp-prefer-flymake nil)))
 
@@ -112,21 +113,42 @@
 		([remap xref-find-references] . lsp-ui-peek-find-references)
 		("C-c u" . lsp-ui-imenu))
     :hook (lsp-mode-hook . lsp-ui-mode)
-    :custom((lsp-ui-doc-enable t)
-	    (lsp-ui-doc-use-childframe t)
-	    (lsp-ui-flycheck-enable t)
-	    (lsp-ui-flycheck-list-position 'right)
-	    (lsp-ui-flycheck-live-reporting t)
-	    (lsp-ui-peek-enable t)
-	    (lsp-ui-peek-list-width 60)
-	    (lsp-ui-peek-peek-height 25)
-	    (lsp-ui-doc-header t)
-	    (lsp-ui-doc-include-signature t)
-	    (lsp-ui-doc-position 'at-point)
-	    (lsp-ui-doc-border (face-foreground 'default))
-	    (lsp-ui-sideline-enable t)
-	    (lsp-ui-sideline-ignore-duplicate t)
-	    (lsp-ui-sideline-show-code-actions t))
+    :custom
+    ;; lsp-ui-doc
+    (lsp-ui-doc-enable nil)
+    (lsp-ui-doc-header t)
+    (lsp-ui-doc-include-signature nil)
+    (lsp-ui-doc-position 'at-point) ;; top, bottom, or at-point
+    (lsp-ui-doc-max-width 120)
+    (lsp-ui-doc-max-height 30)
+    (lsp-ui-doc-use-childframe t)
+    (lsp-ui-doc-use-webkit t)
+    ;; lsp-ui-flycheck
+    (lsp-ui-flycheck-enable nil)
+    ;; lsp-ui-sideline
+    (lsp-ui-sideline-enable nil)
+    (lsp-ui-sideline-ignore-duplicate t)
+    (lsp-ui-sideline-show-symbol t)
+    (lsp-ui-sideline-show-hover t)
+    (lsp-ui-sideline-show-diagnostics nil)
+    (lsp-ui-sideline-show-code-actions t)
+    (lsp-ui-sideline-code-actions-prefix "")
+    ;; lsp-ui-imenu
+    (lsp-ui-imenu-enable t)
+    (lsp-ui-imenu-kind-position 'top)
+    ;; lsp-ui-peek
+    (lsp-ui-peek-enable t)
+    (lsp-ui-peek-peek-height 20)
+    (lsp-ui-peek-list-width 50)
+    (lsp-ui-peek-fontify 'on-demand) ;; never, on-demand, or always
+    :preface
+    (defun ladicle/toggle-lsp-ui-doc ()
+      (interactive)
+      (if lsp-ui-doc-mode
+	  (progn
+	    (lsp-ui-doc-mode -1)
+	    (lsp-ui-doc--hide-frame))
+	         (lsp-ui-doc-mode 1)))
     :config
     ;; Use lsp-ui-doc-webkit only in GUI
     (setq lsp-ui-doc-use-webkit nil)
