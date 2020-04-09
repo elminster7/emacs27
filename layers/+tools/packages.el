@@ -101,7 +101,7 @@
 ;; lsp mode
 (defun tools/lsp-mode ()
   "lsp mode"
-  (use-package company-lsp
+  (use-package lsp-ivy
   :commands lsp
   :ensure t
   :custom ((lsp-auto-guess-root t)
@@ -152,9 +152,9 @@
     (lsp-ui-imenu-kind-position 'top)
     ;; lsp-ui-peek
     (lsp-ui-peek-enable t)
-    (lsp-ui-peek-peek-height 20)
+    (lsp-ui-peek-peek-height 120)
     (lsp-ui-peek-list-width 50)
-    (lsp-ui-peek-fontify 'on-demand) ;; never, on-demand, or always
+    (lsp-ui-peek-fontify 'always) ;; never, on-demand, or always
     :preface
     (defun ladicle/toggle-lsp-ui-doc ()
       (interactive)
@@ -214,7 +214,7 @@
   (tools/ivy)
   (tools/lsp-mode)
   (tools/lsp-ui)
-  (tools/company-lsp)
+;;  (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
