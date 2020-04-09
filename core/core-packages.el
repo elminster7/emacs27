@@ -3,9 +3,10 @@
 
 (package-initialize)
 
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa.milkbox" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;(add-to-list 'package-archives '("melpa.milkbox" . "http://melpa.milkbox.net/packages/") t)
+;;(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa.stable" . "https://stable.melpa.org/packages/") t)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)

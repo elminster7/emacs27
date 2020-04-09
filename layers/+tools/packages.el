@@ -101,7 +101,7 @@
 ;; lsp mode
 (defun tools/lsp-mode ()
   "lsp mode"
-  (use-package lsp-ivy
+  (use-package company-lsp
   :commands lsp
   :ensure t
   :custom ((lsp-auto-guess-root t)
