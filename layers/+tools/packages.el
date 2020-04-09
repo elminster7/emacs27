@@ -177,8 +177,16 @@
   "company lsp"
   (use-package company-lsp
   :ensure t
-  :commands company-lsp
-  :config (push 'company-lsp company-backends)))
+  :commands lsp
+  :config (push 'company-lsp company-backends)
+  :custom ((lsp-auto-guess-root t)
+	   (lsp-enable-snippet nil)
+	   (lsp-prefer-flymake nil))
+  :hook ((python-mode c-mode c++-mode) . lsp)
+  :config
+  (require 'lsp-clients)
+  ;; Prefer using lsp-ui (flycheck) over flymake.
+  (setq lsp-prefer-flymake nil)))
 
 (defun tools/ccls ()
   (use-package ccls
@@ -214,7 +222,7 @@
   (tools/ivy)
   (tools/lsp-mode)
   (tools/lsp-ui)
-;;  (tools/company-lsp)
+  (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
