@@ -98,8 +98,8 @@
   "thils only installs it for programming mode derivatives. you can also makeit global.."
   (use-package auto-highlight-symbol
     :ensure t
-    :init (add-hook 'prog-mode-hook 'highlight-symbol-mode)
-    (global-auto-highlight-symbol-mode t)
+    :init ((add-hook 'prog-mode-hook 'highlight-symbol-mode)
+    (global-auto-highlight-symbol-mode t))
     :bind (:map auto-highlight-symbol-mode-map
                 ("M-p" . ahs-backward)
                 ("M-n" . ahs-forward))))
