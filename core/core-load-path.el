@@ -30,6 +30,10 @@
 (defvar layer-tools-dir (expand-file-name "+tools/packages.el" emacs-layers-dir)
   "This Directory performance tunning.")
 
+;; ▶ ui directory.
+(defvar layer-ui-dir (expand-file-name "+ui/packages.el" emacs-layers-dir)
+  "This Directory performance tunning.")
+
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; ▶ add appearance path init.
 (defun emacs/load-appearance-path ()
@@ -55,11 +59,17 @@
   (load-file layer-completion-dir)
   (completion/init))
 
-;; add completion dir.
+;; add tool dir.
 (defun emacs/load-tools-dir ()
   "emacs performance directory load path."
   (load-file layer-tools-dir)
   (tools/init))
+
+;; add ui dir.
+(defun emacs/load-ui-dir ()
+  "emacs ui directory load path."
+  (load-file layer-ui-dir)
+  (ui/init))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 (defun emacs/load-path-init ()
@@ -67,6 +77,7 @@
   (emacs/load-editor-dir)
   (emacs/load-completion-dir)
   (emacs/load-tools-dir)
-  (emacs/load-performance-dir))
+  (emacs/load-performance-dir)
+  (emacs/load-ui-dir))
 
 (provide 'core-load-path)
