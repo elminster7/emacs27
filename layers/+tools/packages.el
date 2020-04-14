@@ -175,7 +175,7 @@
 
 (defun tools/company-lsp ()
   "company lsp"
-  (use-package lsp-ivy
+  (use-package company-lsp
   :ensure t
   :commands lsp
   :config (push 'company-lsp company-backends)
