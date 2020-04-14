@@ -101,108 +101,27 @@
 ;; lsp mode
 (defun tools/lsp-mode ()
   "lsp mode"
-  (use-package lsp-ivy
-  :commands lsp
-  :ensure t
-  :custom ((lsp-auto-guess-root t)
-	   (lsp-enable-snippet nil)
-	   (lsp-prefer-flymake nil))
-  :hook ((python-mode c-mode c++-mode) . lsp)
-  :config
-  (require 'lsp-clients)
-  ;; Prefer using lsp-ui (flycheck) over flymake.
-  (setq lsp-prefer-flymake nil)))
+  (use-package lsp-mode
+    :ensure t
+    :config (require 'lsp-mode)))
 
 (defun tools/lsp-ui ()
   "lsp mode"
-  (use-package lsp-ui
-    :requires lsp-mode flycheck
-    :commands lsp-ui-mode
-    :ensure t
-    :custom-face
-    (lsp-ui-doc-background ((t (:background nil))))
-    (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
-    :bind (:map lsp-ui-mode-map
-		([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-		([remap xref-find-references] . lsp-ui-peek-find-references)
-		("C-c u" . lsp-ui-imenu))
-    :hook (lsp-mode-hook . lsp-ui-mode)
-    :custom
-    ;; lsp-ui-doc
-    (lsp-ui-doc-enable nil)
-    (lsp-ui-doc-header t)
-    (lsp-ui-doc-include-signature nil)
-    (lsp-ui-doc-position 'at-point) ;; top, bottom, or at-point
-    (lsp-ui-doc-max-width 120)
-    (lsp-ui-doc-max-height 30)
-    (lsp-ui-doc-use-childframe t)
-    (lsp-ui-doc-use-webkit t)
-    ;; lsp-ui-flycheck
-    (lsp-ui-flycheck-enable nil)
-    ;; lsp-ui-sideline
-    (lsp-ui-sideline-enable nil)
-    (lsp-ui-sideline-ignore-duplicate t)
-    (lsp-ui-sideline-show-symbol t)
-    (lsp-ui-sideline-show-hover t)
-    (lsp-ui-sideline-show-diagnostics nil)
-    (lsp-ui-sideline-show-code-actions t)
-    (lsp-ui-sideline-code-actions-prefix "")
-    ;; lsp-ui-imenu
-    (lsp-ui-imenu-enable t)
-    (lsp-ui-imenu-kind-position 'top)
-    ;; lsp-ui-peek
-    (lsp-ui-peek-enable t)
-    (lsp-ui-peek-peek-height 120)
-    (lsp-ui-peek-list-width 50)
-    (lsp-ui-peek-fontify 'always) ;; never, on-demand, or always
-    :preface
-    (defun ladicle/toggle-lsp-ui-doc ()
-      (interactive)
-      (if lsp-ui-doc-mode
-	  (progn
-	    (lsp-ui-doc-mode -1)
-	    (lsp-ui-doc--hide-frame))
-	         (lsp-ui-doc-mode 1)))
-    :config
-    ;; Use lsp-ui-doc-webkit only in GUI
-    (setq lsp-ui-doc-use-webkit nil)
-    ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-    ;; emacs-lsp/lsp-ui#243
-    (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-      (setq mode-line-format nil))
-    :init (setq lsp-ui-sideline-toggle-symbol-info t)))
+  (use-package lsp-ui))
 
 
 (defun tools/company-lsp ()
   "company lsp"
-  (use-package lsp-ivy
+  (use-package company-lsp
   :ensure t
-  :commands lsp
-  :config (push 'company-lsp company-backends)
-  :custom ((lsp-auto-guess-root t)
-	   (lsp-enable-snippet nil)
-	   (lsp-prefer-flymake nil))
-  :hook ((python-mode c-mode c++-mode) . lsp)
-  :config
-  (require 'lsp-clients)
-  ;; Prefer using lsp-ui (flycheck) over flymake.
-  (setq lsp-prefer-flymake nil)))
-
-(defun tools/ccls ()
-  (use-package ccls
-  :ensure t
-  :config
-  (setq ccls-executable "ccls")
-  (setq lsp-prefer-flymake nil)
-  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
-  :hook ((c-mode c++-mode) .
-	 (lambda () (require 'ccls)(lsp)))))
+  :config ((require 'company-lsp)
+	   (push 'company-lsp company-backends)
+	   (add-hook 'after-init-hook 'global-company-mode))
 
 (defun tools/lsp-clangd ()
-;;  (add-to-list 'load-path "~/.emacs.d/elpa/lsp-clangd")
-;;  (require 'lsp-clangd)
+  (setq lsp-clients-clangd-executable "/usr/lib/llvm-9/bin/clangd")
   (add-hook 'c-mode-hook #'lsp-clangd-c-enable)
-  (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
+  (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable))
 
 ;; ▼ bind keymapping for tool.
 (defun tools/manual-to-man ()
@@ -227,5 +146,4 @@
   (tools/multiplecursor)
   (tools/counsel-gtags)
   (tools/bind-key)
-;;  (tools/lsp-clangd))
-  (tools/ccls))
+  (tools/lsp-clangd))
