@@ -105,8 +105,8 @@
   :commands lsp
   :ensure t
   :hook ((python-mode c-mode c++-mode) . lsp)
-  :init ((add-hook 'c-mode-hook #'lsp-clangd-c-enable)
-	 (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable))
+;;  :init ((add-hook 'c-mode-hook #'lsp-clangd-c-enable)
+;;	 (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable))
   :config
   (require 'lsp-clients)
   ;; Prefer using lsp-ui (flycheck) over flymake.
@@ -227,4 +227,5 @@
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
-  (tools/bind-key))
+  (tools/bind-key)
+  (tools/ccls))
