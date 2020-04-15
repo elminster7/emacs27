@@ -101,13 +101,12 @@
 ;; lsp mode
 (defun tools/lsp-mode ()
   "lsp mode"
-  (use-package lsp-ivy
+  (use-package lsp-mode
   :commands lsp
   :ensure t
-  :custom ((lsp-auto-guess-root t)
-	   (lsp-enable-snippet nil)
-	   (lsp-prefer-flymake nil))
   :hook ((python-mode c-mode c++-mode) . lsp)
+  :init ((add-hook 'c-mode-hook #'lsp-clangd-c-enable)
+	 (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable))
   :config
   (require 'lsp-clients)
   ;; Prefer using lsp-ui (flycheck) over flymake.
@@ -223,12 +222,9 @@
   (tools/counsel)
   (tools/ivy-rtags)
   (tools/ivy)
-;;  (tools/lsp-mode)
+  (tools/lsp-mode)
   (tools/lsp-ui)
-  (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
-  (tools/bind-key)
-  (tools/lsp-clangd))
-;;  (tools/ccls))
+  (tools/bind-key))
