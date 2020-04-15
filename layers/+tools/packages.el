@@ -186,7 +186,10 @@
   :config
   (require 'lsp-clients)
   ;; Prefer using lsp-ui (flycheck) over flymake.
-  (setq lsp-prefer-flymake nil)))
+  (setq lsp-prefer-flymake nil)
+  (setq company-transformers nil
+	company-lsp-async t
+	company-lsp-cache-candidates nil)))
 
 (defun tools/ccls ()
   (use-package ccls
@@ -220,12 +223,12 @@
   (tools/counsel)
   (tools/ivy-rtags)
   (tools/ivy)
-  (tools/lsp-mode)
+;;  (tools/lsp-mode)
   (tools/lsp-ui)
   (tools/company-lsp)
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
   (tools/bind-key)
-;;  (tools/lsp-clangd))
-  (tools/ccls))
+  (tools/lsp-clangd))
+;;  (tools/ccls))
