@@ -227,5 +227,5 @@
   (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
-  (tools/bind-key)
-  (tools/ccls))
+  (tools/bind-key))
+  ;;(tools/ccls))
