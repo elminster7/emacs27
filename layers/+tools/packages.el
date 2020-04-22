@@ -52,6 +52,21 @@
      ("C-c t" . cscope-find-this-text-string)
      ("C-c n" . cscope-find-egrep-pattern))))
 
+;; helm cscope
+(defun editor/helm-cscope ()
+  "helm cscope"
+  (use-package helm-cscope
+    :ensure t
+    :init
+    (add-hook 'c-mode-hook 'helm-cscope-mode)
+    (add-hook 'c++-mode-hook 'helm-cscope-mode)
+    (add-hook 'asm-mode-hook 'helm-cscope-mode)
+    :bind (("C-c c" . helm-cscope-find-calling-this-function)
+	   ("C-c d" . helm-cscope-find-called-this-function)
+	   ("C-c ]" . helm-cscope-find-global-definition)
+	   ("C-c [" . helm-cscope-pop-mark)
+	   ("C-c e" . helm-cscope-find-egrep-pattern))))
+
 (defun tools/counsel-gtags ()
   "counsel gtags"
   (use-package counsel-gtags
@@ -224,7 +239,7 @@
   (tools/ivy)
   (tools/lsp-mode)
   (tools/lsp-ui)
-  (tools/init-xcscope)
+;  (tools/helm-cscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
   (tools/bind-key))

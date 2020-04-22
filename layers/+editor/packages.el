@@ -70,6 +70,30 @@
 	(global-semantic-decoration-mode t)
 	:bind 	("C-c h" . 'ecb-toggle-compile-window)))
 
+
+;; helm evil marker
+(defun editor/helm-evil-marker ()
+  "helm evil marker init"
+  (use-package helm-evil-markers
+    :ensure t
+    :bind (("C-c e" . helm-evil-markers)
+	   ("C-c m" . helm-evil-markers-set))))
+
+;; helm cscope
+(defun editor/helm-cscope ()
+  "helm cscope"
+  (use-package helm-cscope
+    :ensure t
+    :init
+    (add-hook 'c-mode-hook 'helm-cscope-mode)
+    (add-hook 'c++-mode-hook 'helm-cscope-mode)
+    (add-hook 'asm-mode-hook 'helm-cscope-mode)
+    :bind (("C-c c" . helm-cscope-find-calling-this-function)
+	   ("C-c d" . helm-cscope-find-called-this-function)
+	   ("C-c ]" . helm-cscope-find-global-definition)
+	   ("C-c [" . helm-cscope-pop-mark)
+	   ("C-c e" . helm-cscope-find-egrep-pattern))))
+
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Interface
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,6 +208,7 @@
   (editor/highlight-indent)
   (editor/winmove-init)
   (editor/nlinum)
+  (editor/helm-evil-marker)
   (editor/dired-settings)
   (editor/linux-c-indent)
   (editor/popup-imenu)
