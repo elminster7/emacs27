@@ -97,12 +97,11 @@
   :commands lsp
   :ensure t
   :hook ((python-mode c-mode c++-mode) . lsp)
-;;  :init ((add-hook 'c-mode-hook #'lsp-clangd-c-enable)
-;;	 (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable))
   :config
-  (require 'lsp-clients)
-  ;; Prefer using lsp-ui (flycheck) over flymake.
-  (setq lsp-prefer-flymake nil)))
+  ((require 'lsp-clients)
+   (setq lsp-clients-clangd-args '("-j4=4" "-background-index" "-log=error"))
+   ;; Prefer using lsp-ui (flycheck) over flymake.
+   (setq lsp-prefer-flymake nil))))
 
 (defun tools/lsp-ui ()
   "lsp mode"
@@ -111,7 +110,7 @@
     :commands lsp-ui-mode
     :ensure t
     :custom-face
-    (lsp-ui-doc-background ((t (:background nil))))
+    (lsp-ui-doc-background ((t (:background "blue"))))
     (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
     :bind (:map lsp-ui-mode-map
 		([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
