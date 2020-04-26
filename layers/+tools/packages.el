@@ -66,36 +66,14 @@
 	   ("M-g [" . counsel-gtags-previous-history)
 	   ("M-g ]" . counsel-gtags-next-history))))
 
-;; tools ivy-rtags
 (defun tools/ivy-rtags ()
-  "company rtags"
+  "ivy ratags"
   (use-package ivy-rtags
     :ensure t
-    :hook ((c++-mode . rtags-start-process-unless-running)
-    (c-mode . rtags-start-process-unless-running))
-    :config (setq rtags-completions-enabled t
-		  rtags-path "/home/elminster/.emacs.d/elpa/rtags-20200221.36/rtags.el"
-		  rtags-rc-binary-name "/usr/local/bin/rc"
-		  rtags-use-ivy t
-		  rtags-rdm-binary-name "/usr/local/bin/rdm")
-    :bind (("M-." . rtags-find-symbol-at-point)
-	   ("M-," . rtags-find-symbol)
-	   ("M-r" . rtags-find-references-at-point)
-;	   ("C-o" . rtags-find-references-at-point)
-;	   ("M-s" . rtags-find-file)
-;	   ("C-v" . rtags-find-virtuals-at-point)
-;	   ("C-F" . rtags-fixit)
-	   ("M-]" . rtags-location-stack-forward)
-	   ("M-[" . rtags-location-stack-back)
-;	   ("C-n" . rtags-next-match)
-;	   ("C-p" . rtags-previous-match)
-;	   ("C-P" . rtags-preprocess-file)
-;	   ("C-R" . rtags-rename-symbol)
-	   ("M-s" . rtags-show-rtags-buffer)
-	   ("M-t" . rtags-print-symbol-info))
-;	   ("C-t" . rtags-symbol-type)
-;	   ("C-I" . rtags-include-file)
-;	   ("C-i" . rtags-get-include-file-for-symbol))
+    :bind (("M-." . rtags-find-symbol)
+	   ("M-," . rtags-find-symbol-at-point)
+	   ("M-t" . rtags-location-stack-back)
+	   ("M-]" . rtags.location-stack-forward))
     :init (setq rtags-display-result-backend 'ivy)))
 
 ;; lsp mode
@@ -224,7 +202,7 @@
   (tools/ivy)
   (tools/lsp-mode)
   (tools/lsp-ui)
-  (tools/init-xcscope)
+;  (tools/init-xcscope)
   (tools/multiplecursor)
   (tools/counsel-gtags)
   (tools/bind-key))
