@@ -70,6 +70,69 @@
 	(global-semantic-decoration-mode t)
 	:bind 	("C-c h" . 'ecb-toggle-compile-window)))
 
+
+;; helm evil marker
+(defun editor/helm-evil-marker ()
+  "helm evil marker init"
+  (use-package helm-evil-markers
+    :ensure t
+    :bind (("C-c e" . helm-evil-markers)
+	   ("C-c m" . helm-evil-markers-set))))
+
+;; helm cscope
+(defun editor/helm-cscope ()
+  "helm cscope"
+  (use-package helm-cscope
+    :ensure t
+    :init
+    (add-hook 'c-mode-hook 'helm-cscope-mode)
+    (add-hook 'c++-mode-hook 'helm-cscope-mode)
+    (add-hook 'asm-mode-hook 'helm-cscope-mode)
+    :bind (("C-c c" . helm-cscope-find-calling-this-function)
+	   ("C-c d" . helm-cscope-find-called-this-function)
+	   ("C-c ]" . helm-cscope-find-global-definition)
+	   ("C-c [" . helm-cscope-pop-mark)
+	   ("C-c e" . helm-cscope-find-egrep-pattern))))
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Interface
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; This is a function copied from stackoverflow to facify #if 0/#else/#endif keywords.
+;; The comments are added by myself to make it understandable. 
+(defun my-c-mode-font-lock-if0 (limit)
+  (save-restriction
+    (widen)
+    (save-excursion
+      (goto-char (point-min))
+      (let ((depth 0) str start start-depth)
+	;; Search #if/#else/#endif using regular expression.
+        (while (re-search-forward "^\\s-*#\\s-*\\(if\\|else\\|endif\\)" limit 'move)
+          (setq str (match-string 1))
+	  ;; Handle #if.
+          (if (string= str "if")
+              (progn
+                (setq depth (1+ depth))
+		;; Handle neariest 0.
+                (when (and (null start) (looking-at "\\s-+0"))
+                  (setq start (match-end 0)
+                        start-depth depth)))
+	    ;; Handle #else, here we can decorate #if 0->#else block using 'font-lock-comment-face'.
+            (when (and start (= depth start-depth))
+              (c-put-font-lock-face start (match-beginning 0) 'font-lock-comment-face)
+              (setq start nil))
+	    ;; Handle #endif, return to upper block if possible.
+            (when (string= str "endif")
+              (setq depth (1- depth)))))
+	;; Corner case when there are only #if 0 (May be you are coding now:))
+        (when (and start (> depth 0))
+          (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
+  nil)
+
+(defun my-c-mode-common-hook ()
+  (font-lock-add-keywords
+   nil
+   '((my-c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end))
+
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; edit
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,7 +170,9 @@
   "white space column"
   (setq-default
    whitespace-line-column 80
-   whitespace-style       '(face lines-tail)))
+   whitespace-style       '(face lines-tail))
+  (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+  (add-hook 'c++-mode-common-hook 'my-c-mode-common-hook))
 
 (defun editor/default-env ()
   "default env"
@@ -143,6 +208,7 @@
   (editor/highlight-indent)
   (editor/winmove-init)
   (editor/nlinum)
+  (editor/helm-evil-marker)
   (editor/dired-settings)
   (editor/linux-c-indent)
   (editor/popup-imenu)
