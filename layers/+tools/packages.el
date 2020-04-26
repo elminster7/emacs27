@@ -86,8 +86,8 @@
     :ensure t
     :bind (("M-." . rtags-find-symbol)
 	   ("M-," . rtags-find-symbol-at-point)
-	   ("M-t" . rtags-location-stack-back)
-	   ("M-]" . rtags.location-stack-forward))
+	   ("M-;" . rtags-location-stack-back)
+	   ("M-'" . rtags.location-stack-forward))
     :init (setq rtags-display-result-backend 'ivy)))
 
 ;; lsp mode
