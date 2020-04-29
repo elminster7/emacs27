@@ -41,34 +41,34 @@
   (set-face-foreground 'highlight-indent-guides-character-face "red"))
 
 ;; ▼ ECB
-    (defun editor/ecb ()
-      "ECB IDE init"
-      (use-package ecb
-	:ensure t
-	:init (setq ecb-layout-name "left6")
-	(setq ecb-examples-bufferinfo-buffer-name nil)
-	(setq stack-trace-on-error t)
-	(setq ecb-version-check nil)
-	(setq ecb-compile-window-height 30)
-	(setq ecb-windows-width 0.20)
-	(bind-key "M-1" 'ecb-goto-window-sources)
-	(bind-key "M-3" 'ecb-goto-window-history)
-	(bind-key "M-2" 'ecb-goto-window-methods)
-	(bind-key "M-0" 'ecb-goto-window-edit0)
-	;; disable tip of the day
-	(setq ecb-tip-of-the-day nil)
-	;; semantic settings
-	(semantic-mode t)
-	;;	(set-face-background 'semantic-highlight-func-current-tag-face "blue")
-;;	(set-face-background 'semantic-highlight-func-current-tag-face "brightred")
-;;	(set-face-foreground 'semantic-highlight-func-current-tag-face "black")
-	(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-;;	(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
-;;	(global-semanticdb-minor-mode t)
-	(global-semantic-stickyfunc-mode t)
-	(global-semantic-highlight-func-mode t)
-	(global-semantic-decoration-mode t)
-	:bind 	("C-c h" . 'ecb-toggle-compile-window)))
+(defun editor/ecb ()
+  "ECB IDE init"
+  (use-package ecb
+    :ensure t
+    :init (setq ecb-layout-name "left6")
+    (setq ecb-examples-bufferinfo-buffer-name nil)
+    (setq stack-trace-on-error t)
+    (setq ecb-version-check nil)
+    (setq ecb-compile-window-height 30)
+    (setq ecb-windows-width 0.20)
+    (bind-key "M-1" 'ecb-goto-window-sources)
+    (bind-key "M-3" 'ecb-goto-window-history)
+    (bind-key "M-2" 'ecb-goto-window-methods)
+    (bind-key "M-0" 'ecb-goto-window-edit0)
+    ;; disable tip of the day
+    (setq ecb-tip-of-the-day nil)
+    ;; semantic settings
+    (semantic-mode t)
+    ;;	(set-face-background 'semantic-highlight-func-current-tag-face "blue")
+    ;;	(set-face-background 'semantic-highlight-func-current-tag-face "brightred")
+    ;;	(set-face-foreground 'semantic-highlight-func-current-tag-face "black")
+    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+    ;;	(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
+    ;;	(global-semanticdb-minor-mode t)
+    (global-semantic-stickyfunc-mode t)
+    (global-semantic-highlight-func-mode t)
+    (global-semantic-decoration-mode t)
+    :bind 	("C-c h" . 'ecb-toggle-compile-window)))
 
 
 ;; helm evil marker
@@ -134,6 +134,17 @@
    '((my-c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Language Interface
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(defun editor/phps-mode ()
+  "phps mode settings"
+  (use-package phps-mode
+    :ensure t
+    :init (setq auto-mode-alist
+		(cons '("\\.php\\'" . phps-mode) auto-mode-alist))))
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; edit
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; symbol function imenu
@@ -182,9 +193,10 @@
   (set-language-environment "UTF-8")
 
   (editor/white-space)
+  (editor/phps-mode)
   
   (setq auto-mode-alist
-	  (cons '("\\.mak\\'" . makefile-mode) auto-mode-alist))
+	(cons '("\\.mak\\'" . makefile-mode) auto-mode-alist))
   (setq auto-mode-alist
 	(cons '("\\.bb\\'" . makefile-mode) auto-mode-alist))
   (setq auto-mode-alist
