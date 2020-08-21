@@ -4,6 +4,12 @@
     :ensure t
     ))
 
+(defun ui/spacemacs-theme ()
+  "spaceemacs theme init"
+  (use-package spacemacs-theme
+    :ensure t
+    ))
+
 (defun ui/powerline-evil ()
   "powerline evil init"
   (use-package powerline-evil
@@ -13,7 +19,7 @@
 ;; editor ui init
 (defun ui/function_init ()
   "ui preference settings init"
-  (ui/vsdark-theme)
+; (ui/spacemacs-theme)
   (ui/powerline-evil))
 
 (defun ui/init ()
