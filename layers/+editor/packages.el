@@ -25,7 +25,7 @@
     (setq nlinum-format "%4d\u2502")
     (global-hl-line-mode +1)
     (global-nlinum-mode t)
-    (set-face-background 'hl-line "color-238")
+;;    (set-face-background 'hl-line "color-238")
     (setq auto-window-vscroll nil)))
 
 (defun editor/highlight-indent ()
@@ -92,7 +92,7 @@
 	   ("C-c d" . helm-cscope-find-called-this-function)
 	   ("C-c ]" . helm-cscope-find-global-definition)
 	   ("C-c [" . helm-cscope-pop-mark)
-	   ("C-c e" . helm-cscope-find-egrep-pattern))))
+	   ("C-c p" . helm-cscope-find-egrep-pattern))))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Interface
