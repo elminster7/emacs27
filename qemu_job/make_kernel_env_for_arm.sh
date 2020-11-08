@@ -30,8 +30,11 @@ download_ubuntu_filesystem() {
 }
 
 prepare_compress_image() {
-    wget https://releases.linaro.org/aarch64-laptops/images/ubuntu/18.04/aarch64-laptops-bionic-prebuilt.img.xz
-    xz -d $QEMU_DIR/aarch64-laptops-bionic-prebuilt.img.xz
+    if [ ! -f aarch64-laptops-bionic-prebuilt.img ]; then
+        wget https://releases.linaro.org/aarch64-laptops/images/ubuntu/18.04/aarch64-laptops-bionic-prebuilt.img.xz
+        xz -d $QEMU_DIR/aarch64-laptops-bionic-prebuilt.img.xz
+    fi
+
     FILESYSTEM=aarch64-laptops-bionic-prebuilt.img
     EFI=`fdisk -l $PWD/$FILESYSTEM | grep EFI | awk '{print $2}'`
     Linux=`fdisk -l $PWD/$FILESYSTEM | grep Linux | awk '{print $2}'`
@@ -42,11 +45,11 @@ prepare_compress_image() {
 
     mkfs.ext4 rootfs.ext4
 
-    if [ ! -d mnt2 ]; then
-        mkdir -p $QEMU_DIR/mnt2 $QEMU_DIR/rootfs
-        sudo mount -v -o offset=$Linux_Size -t ext4 $FILESYSTEM $QEMU_DIR/mnt2
-        sudo mount -o loop rootfs.ext4 $QEMU_DIR/rootfs
-        sudo cp -rf $QEMU_DIR/mnt2/* $QEMU_DIR/rootfs/
+    if [ ! -d ~/$QEMU_DIR/mnt2 ]; then
+        mkdir -p ~/$QEMU_DIR/mnt2 ~/$QEMU_DIR/rootfs
+        sudo mount -v -o offset=$Linux_Size -t ext4 $FILESYSTEM ~/$QEMU_DIR/mnt2
+        sudo mount -o loop rootfs.ext4 ~/$QEMU_DIR/rootfs
+        sudo cp -rf ~/$QEMU_DIR/mnt2/* ~/$QEMU_DIR/rootfs/
     fi
 
     sudo umount mnt2
